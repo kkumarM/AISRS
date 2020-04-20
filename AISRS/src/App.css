@@ -1,0 +1,226 @@
+@font-face {
+  font-family: "Intel Clear Pro Bold";
+  src: url(./fonts/IntelClearPro_Bd.ttf) format("truetype");
+  font-weight: normal;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Intel Clear";
+  src: url("./fonts/IntelClear-Regular-webfont.eot");
+  src: url("./fonts/IntelClear-Regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("./fonts/IntelClear-Regular-webfont.woff") format("woff"),
+    url("./fonts/IntelClear-Regular-webfont.ttf") format("truetype");
+  font-weight: normal;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Light */
+@font-face {
+  font-family: "Intel Clear";
+  src: url("./fonts/IntelClear-Light-webfont.eot");
+  src: url("./fonts/IntelClear-Light-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("./fonts/IntelClear-Light-webfont.woff") format("woff"),
+    url("./fonts/IntelClear-Light-webfont.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+/* Bold */
+@font-face {
+  font-family: "Intel Clear";
+  src: url("./fonts/IntelClear-Bold-webfont.eot");
+  src: url("./fonts/IntelClear-Bold-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("./fonts/IntelClear-Bold-webfont.woff") format("woff"),
+    url("./fonts/IntelClear-Bold-webfont.ttf") format("truetype");
+  font-weight: bold;
+  font-weight: 700;
+  font-style: normal;
+}
+
+html, body { height: 100%; }
+
+@media only screen and (min-width: 1024px) {
+  #root {
+    width: 970px;
+    margin: 0 auto;
+    background-color: #f7f8fa;
+  }
+}
+
+#configurationForm {
+  margin: 25px;
+  min-height: 400px;
+}
+
+.h6Styles {
+  color: #666660;
+  margin-bottom: 15px !important;
+  font-family: Intel Clear !important;
+  font-weight: bold !important;
+}
+
+.accordion-name {
+  font-family: Intel Clear Pro Bold !important;
+  color: #003c71;
+}
+
+label.form-label {
+  font-size: 13px;
+  padding: 0 20px 10px 0;
+  font-family: Intel Clear;
+  width: 40%;
+  display: inline-block;
+  color: #666660;
+}
+
+.form-check {
+  display: inline-block !important;
+  font-family: Intel Clear;
+  color: #666660;
+  font-size: 12px;
+}
+
+/* input.form-check-input {
+  vertical-align: middle;
+} */
+
+.processor_number {
+  font-family: Intel Clear;
+  font-size: 13px;
+  padding: 0 20px 13px 0;
+  color: #666660;
+  display: inline-block;
+}
+
+td .form-group {
+  margin: 0 10px 10px;
+}
+td input[type="text"] {
+  width: 100%;
+}
+.subtitleStyles {
+  font-family: Intel Clear !important;
+  color: #666660;
+}
+select.form-control {
+  padding: 5px;
+  font-size: 12px;
+  font-family: Intel Clear;
+  width: 45%;
+  color: #666660;
+  border-radius: 5px;
+  outline: none;
+}
+
+.form-group {
+  margin: 15px 10px 20px;
+}
+
+#workLoadConfigurationGrid div > p {
+  font-family: Intel Clear;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 43%;
+  padding: 5px 0 5px 5px;
+  font-family: Intel Clear;
+  font-size: 12px;
+  border: none;
+  color: #666660;
+  outline: none;
+  border: 1px solid rgb(169, 169, 169);
+  border-radius: 5px;
+}
+
+.btnCenter {
+  margin: 50px auto;
+  display: flex;
+  outline: 0;
+  position: relative;
+  justify-content: center;
+}
+
+.btnAdvConfig {
+  display: block;
+  outline: 0;
+  position: relative;
+  float: right;
+  margin-right: 25px;
+}
+
+.btnAdvConfig > button:first-child span {
+  font-family: Intel Clear;
+  text-transform: none;
+}
+
+.workloadEditBtn > button {
+  font-family: Intel Clear;
+  text-transform: none;
+}
+
+#form-dialog-title {
+  font-family: Intel Clear Bold;
+}
+
+#transcode1 {
+  position: relative;
+}
+
+#disabletranscode {
+  position: absolute;
+  z-index: 1;
+  opacity: 0.5;
+  background-color: grey;
+  width: 30%;
+  height: 70%;
+}
+.greyBg {
+  position: absolute;
+  z-index: 1;
+  background: grey;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
+}
+
+.positionRel {
+  position: relative;
+}
+
+th {
+  font-family: Intel Clear;
+  font-size: 16px;
+  color: #666660;
+}
+
+td {
+  font-family: Intel Clear;
+  font-size: 14px;
+  color: #666660;
+}
+.processor_name {
+  float: left;
+}
+.processor_list {
+  width: 40%;
+  float: left;
+  margin-bottom: 20px;
+}
+
+.input-slider > input {
+  width: auto;
+  border: none;
+}
+
+.slider {
+  width: 75% !important;
+  padding: 6px 0 !important;
+  margin: 0 10px;
+}

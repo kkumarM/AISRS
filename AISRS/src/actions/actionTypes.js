@@ -1,0 +1,17 @@
+export const BASE_URL = "http://18.224.173.6:80/simulation_csv";
+
+export const BASE_URL_PROCESSOR_LIST = "http://18.224.173.6:80/processor_list";
+
+export const ADD_NEW_VA_WORLOAD = "ADD_NEW_VA_WORLOAD";
+
+export const SET_SCREEN_VALUES = "SET_SCREEN_VALUES";
+
+export const OUTPUT = "OUTPUT";
+
+export const SHOW_LOADER = "SHOW_LOADER";
+
+export const PROCESSOR_LIST_RECORD = "PROCESSOR_LIST_RECORD";
+
+export const SHOW_MORE_DETAILS_SPECIFICATION = "SHOW_MORE_DETAILS_SPECIFICATION";
+
+export const DELETE_WORKLOAD_ITEM = "DELETE_WORKLOAD_ITEM";

@@ -1,0 +1,47 @@
+.header {
+  height: auto;
+  background: #0071c5;
+}
+
+.intel-blue-bar {
+  padding: 15px 18px;
+  display: inline-block;
+}
+
+.intelLogo {
+  height: 40px;
+  position: relative;
+  float: left;
+  margin: 0 20px;
+}
+.logo-text {
+  font-family: Intel Clear;
+  font-size: 20px;
+  color: #fff;
+  position: relative;
+  display: inline;
+}
+
+.intel-banner {
+  margin-top: 0px;
+  height: auto;
+  background: url("../images/header.png") no-repeat center center;
+  padding: 25px;
+  background-size: cover;
+}
+
+.siteTitle {
+  font-family: Intel Clear Pro Bold;
+  color: #ffffff;
+  font-size: 50px;
+  height: auto;
+  margin: 0;
+  text-align: center;
+}
+.siteTitleDescription {
+  color: #ffffff;
+  font-family: Intel Clear;
+  font-size: 16px;
+  margin: 0;
+  text-align: center;
+}

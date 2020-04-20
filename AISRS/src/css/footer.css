@@ -1,0 +1,25 @@
+.footerbox {
+  display: flex;
+  flex-direction: row;
+}
+
+.footerbox div {
+  padding: 0 10px;
+}
+
+.footerContainer {
+  background-color: #eceef1;
+  /* height: 40px; */
+  padding: 15px;
+}
+
+footer,
+.footer {
+  font-size: 0.8em;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
+}
