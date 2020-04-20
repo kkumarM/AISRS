@@ -14,8 +14,8 @@ export function handleScreenChange(temp, screenName) {
 export const fetchProcessorRecord = (series, brand, processor_number) => {
   console.log(series, brand, processor_number);
   const url =
-    actionTypes.BASE_URL_PROCESSOR_LIST +
-    "?series=" +
+    actionTypes.BASE_URL +
+    "processor_list?series=" +
     series +
     "&brand=" +
     brand +
@@ -52,14 +52,37 @@ export const onSubmitHandler = (hardwareConfigObj, workloadConfigObj) => {
     workloadConfigObj,
   };
   console.log(finalObj, "final obj");
+  // return (dispatch) => {
+  //   axios({
+  //     method: "POST",
+  //     url: actionTypes.BASE_URL+"simulation_csv",
+  //     data: { finalObj: finalObj },
+  //     // responseType: "blob",
+  //   })
+  //     .then((response) => {
+  //       // response dispatch to reducer
+  //       console.log(response, "success response");
+  //       if (response.status === 200) {
+  //         const url = window.URL.createObjectURL(new Blob([response.data]));
+  //         const link = document.createElement("a");
+  //         link.href = url;
+  //         link.setAttribute("download", "platform_example.csv");
+  //         document.body.appendChild(link);
+  //         link.click();
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error, "error response");
+  //     });
+  // };
+
   return (dispatch) => {
-    axios({
+    fetch(actionTypes.BASE_URL + "simulation_csv", {
       method: "POST",
-      url: actionTypes.BASE_URL,
-      data: { finalObj: finalObj },
+      body: { finalObj: finalObj },
       // responseType: "blob",
-    })
-      .then((response) => {
+    }).then(
+      (response) => {
         // response dispatch to reducer
         console.log(response, "success response");
         if (response.status === 200) {
@@ -70,9 +93,10 @@ export const onSubmitHandler = (hardwareConfigObj, workloadConfigObj) => {
           document.body.appendChild(link);
           link.click();
         }
-      })
-      .catch((error) => {
+      },
+      (error) => {
         console.log(error, "error response");
-      });
+      }
+    );
   };
 };

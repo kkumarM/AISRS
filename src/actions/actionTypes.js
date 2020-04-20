@@ -1,6 +1,4 @@
-export const BASE_URL = "http://18.224.173.6:80/simulation_csv";
-
-export const BASE_URL_PROCESSOR_LIST = "http://18.224.173.6:80/processor_list";
+export const BASE_URL = "https://18.224.173.6:443/";
 
 export const ADD_NEW_VA_WORLOAD = "ADD_NEW_VA_WORLOAD";
 
