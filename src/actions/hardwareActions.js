@@ -6,7 +6,7 @@ export function handleScreenChange(temp, screenName) {
     type: actionTypes.SET_SCREEN_VALUES,
     payload: {
       temp,
-      screenName
+      screenName,
     },
   };
 }
@@ -47,16 +47,16 @@ export const fetchProcessorRecord = (series, brand, processor_number) => {
 };
 
 export const onSubmitHandler = (hardwareConfigObj, workloadConfigObj) => {
-  this.finalObj = {
+  let finalObj = {
     hardwareConfigObj,
     workloadConfigObj,
   };
-  console.log(this.finalObj, "final obj");
+  console.log(finalObj, "final obj");
   return (dispatch) => {
     axios({
       method: "POST",
       url: actionTypes.BASE_URL,
-      data: { finalObj: this.finalObj },
+      data: { finalObj: finalObj },
       // responseType: "blob",
     })
       .then((response) => {
