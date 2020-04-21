@@ -13,10 +13,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import { Form } from "react-bootstrap";
 
 export default class HardwareDetailParameterModal extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let { SoC } = this.props.parameters;
     return (

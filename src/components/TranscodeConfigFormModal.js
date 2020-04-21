@@ -13,10 +13,6 @@ import { Form } from "react-bootstrap";
 import TranscodeForm from "./TranscodeForm";
 
 export default class TranscodeConfigFormModal extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   // handleb = e => {
   //   this.setState({ [e.target.name]: e.target.checked });
   // };
@@ -56,7 +52,13 @@ export default class TranscodeConfigFormModal extends Component {
           );
         } else {
           transcodeArray.push(
-            <TranscodeForm id={transcodeId} index={i} transcode={Transcode} forwarding={Forwarding}/>
+            <TranscodeForm
+              id={transcodeId}
+              index={i}
+              key={i}
+              transcode={Transcode}
+              forwarding={Forwarding}
+            />
           );
         }
       }
@@ -105,7 +107,9 @@ export default class TranscodeConfigFormModal extends Component {
                     </Form.Row>
                   </Form.Group>
                 </Grid>
-                <Grid container>{this.renderTranscode(Transcode, Forwarding)}</Grid>
+                <Grid container>
+                  {this.renderTranscode(Transcode, Forwarding)}
+                </Grid>
               </DialogContent>
               <Grid item xs={12}>
                 <DialogActions>
@@ -113,7 +117,7 @@ export default class TranscodeConfigFormModal extends Component {
                     Cancel
                   </Button>
                   <Button onClick={this.props.onClose} color="primary">
-                    Subscribe
+                    Save
                   </Button>
                 </DialogActions>
               </Grid>

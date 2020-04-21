@@ -44,7 +44,6 @@ const initialHardwareState = {
       VNNI: false,
       TDP: 95,
     },
-    
     Memory: {
       channel_number: 2,
       max_memory_frequency: 2666,
@@ -60,7 +59,6 @@ const initialHardwareState = {
       display_count: 3,
     },
   },
-
   Accelerator: {
     vpu: "KBM 3700VE",
     vpu_count: 3,
@@ -69,6 +67,10 @@ const initialHardwareState = {
 
 const initialLoadedState = {
   loaded: false,
+};
+
+const initialMoreHardwareParameters = {
+  showMoreDetailsSpecification: false,
 };
 
 export function screenParameters(state = initialScreenState, action) {
@@ -81,10 +83,9 @@ export function screenParameters(state = initialScreenState, action) {
 }
 
 export function hardwareParameters(state = initialHardwareState, action) {
-  console.log(action.payload, "action payload hardware");
   switch (action.type) {
     case actionTypes.PROCESSOR_LIST_RECORD:
-      return { ...state, SoC: action.payload };
+      return { ...state, SoC: action.payload ? action.payload : state };
     default:
       return state;
   }
@@ -94,6 +95,18 @@ export function loadedState(state = initialLoadedState, action) {
   switch (action.type) {
     // case "SET_SCREEN_VALUES":
     //   return { ...state, [action.payload.screenName]: action.payload.temp };
+    default:
+      return state;
+  }
+}
+
+export function moreDetailsSpecification(
+  state = initialMoreHardwareParameters,
+  action
+) {
+  switch (action.type) {
+    case actionTypes.SHOW_MORE_DETAILS_SPECIFICATION:
+      return { ...state, showMoreDetailsSpecification: action.payload };
     default:
       return state;
   }

@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { addNewVAWorkload } from "../actions/workloadActions";
+// import { addNewVAWorkload } from "../actions/workloadActions";
 
 const initialStreamState = {
   Camera: {
@@ -241,8 +241,6 @@ export function transcodeParameters(state = initialTranscodeState, action) {
 // };
 
 export function va_workloadParameters(state = initialVAWorkloadState, action) {
-  console.log(action.workloadName, "in reducer");
-
   switch (action.type) {
     case actionTypes.DELETE_WORKLOAD_ITEM:
       return {

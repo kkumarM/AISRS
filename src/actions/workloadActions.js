@@ -15,7 +15,6 @@ export const addNewWorkload = (newVAWorkload) => {
 };
 
 export const deleteWorkload = (workloadName) => {
-  console.log(workloadName, "in delete actions");
   return {
     type: actionTypes.DELETE_WORKLOAD_ITEM,
     workloadName,

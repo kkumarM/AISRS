@@ -49,62 +49,48 @@ class WorkLoadConfiguration extends Component {
   };
 
   deleteWorkload = (workloadName) => {
-    console.log(workloadName, "in config");
     this.props.deleteWorkloadHandler(workloadName);
-    this.addedWorkloadBody(this.props.va_workloadParameters)
+    this.addedWorkloadBody(this.props.va_workloadParameters);
   };
 
-  // deleteWorkload = (workloadName) => {
-  // Object.keys(object.VA_workload).forEach((key, index) => {
-  //   if (workloadName === object.VA_workload[key]) {
-  //     delete object.VA_workload[key];
-  //   }
-  // })
-  // // console.log(object, "temp object");
-  // return object.VA_workload;
-
-  //   const xyz = Object.keys(object.VA_workload).reduce((acc, key) => {
-  //     if (key !== workloadName) {
-  //       return { ...acc, [key]: object.VA_workload[key] };
-  //     }
-  //     return acc;
-  //   }, {});
-
-  //   object.VA_workload = { ...xyz };
-  //   console.log(object.VA_workload, "xyz");
-  //   this.addedWorkloadBody(object.VA_workload);
-  // };
-
   addedWorkloadBody = (obj) => {
-    console.log(obj, "obj in addedworkload body");
     let workloadEntries = [];
 
-    Object.keys(obj).forEach((key, index) => {
-      console.log("key: " + key + ", value: " + obj[key].workload_type, index);
+    if (Object.keys(obj).length === 0) {
       workloadEntries.push(
-        <tr key={index}>
-          <td>{obj[key].workload_type}</td>
-          <td>
-            <div className="workloadEditBtn">
-              <Button color="primary" onClick={this.handleVAWorkloadModalOpen}>
-                <u>{obj[key].workload_name}</u>
-              </Button>
-            </div>
-          </td>
-          <td>
-            <div className="btnAdvConfig">
-              <Button
-                color="primary"
-                onClick={(index) => this.deleteWorkload(key)}
-              >
-                Delete Workload {key}
-              </Button>
-            </div>
-          </td>
+        <tr>
+          <td colspan={2}>WorkLoad List is Empty</td>
         </tr>
       );
-    });
-    console.log(workloadEntries, "workload entries");
+    } else {
+      Object.keys(obj).forEach((key, index) => {
+        workloadEntries.push(
+          <tr key={index}>
+            <td>{obj[key].workload_type}</td>
+            <td>
+              <div className="workloadEditBtn">
+                <Button
+                  color="primary"
+                  onClick={this.handleVAWorkloadModalOpen}
+                >
+                  <u>{obj[key].workload_name}</u>
+                </Button>
+              </div>
+            </td>
+            <td>
+              <div className="btnAdvConfig">
+                <Button
+                  color="primary"
+                  onClick={(index) => this.deleteWorkload(key)}
+                >
+                  Delete Workload
+                </Button>
+              </div>
+            </td>
+          </tr>
+        );
+      });
+    }
     return workloadEntries;
   };
 
@@ -115,6 +101,33 @@ class WorkLoadConfiguration extends Component {
     let { Storage } = this.props.storageParameters;
     let { Display } = this.props.displayWorkloadParameters;
     let { VA_workload } = this.props.va_workloadParameters;
+
+    let typeOfWorkloadList = [];
+    let nameOfWorkloadList = [];
+
+    Object.keys(VA_workload).forEach((key) => {
+      typeOfWorkloadList.push(VA_workload[key].workload_type);
+    });
+   
+    Object.keys(VA_workload).forEach((key) => {
+      nameOfWorkloadList.push(VA_workload[key].workload_name);
+    });
+
+    const renderWorkloadType = typeOfWorkloadList.map((ele, index) => {
+      return (
+        <option value={ele} key={index}>
+          {ele}
+        </option>
+      );
+    });
+
+    const renderWorkloadName = nameOfWorkloadList.map((ele, index) => {
+      return (
+        <option value={ele} key={index}>
+          {ele}
+        </option>
+      );
+    });
 
     return (
       <>
@@ -504,8 +517,8 @@ class WorkLoadConfiguration extends Component {
                     <option value={1}>1</option>
                     <option value={2}>2</option>
                     <option value={3}>3</option>
-                    <option value={4}>4</option>
-                    <option value={5}>5</option>
+                    {/* <option value={4}>4</option>
+                    <option value={5}>5</option> */}
                   </Form.Control>
                 </Form.Row>
               </Form.Group>
@@ -568,9 +581,7 @@ class WorkLoadConfiguration extends Component {
                     <Form.Row>
                       <Form.Label>Type of WorkLoad</Form.Label>
                       <Form.Control as="select">
-                        <option value="Video Structuring">
-                          Video Structuring
-                        </option>
+                        {renderWorkloadType}
                       </Form.Control>
                     </Form.Row>
                   </Form.Group>
@@ -578,9 +589,7 @@ class WorkLoadConfiguration extends Component {
                     <Form.Row>
                       <Form.Label>Name of WorkLoad</Form.Label>
                       <Form.Control as="select">
-                        <option value="Video Structuring_1">
-                          Video Structuring_1
-                        </option>
+                        {renderWorkloadName}
                       </Form.Control>
                     </Form.Row>
                   </Form.Group>
@@ -597,15 +606,13 @@ class WorkLoadConfiguration extends Component {
                   <Form.Group>
                     <Form.Row>
                       <Form.Label>Number of Streams</Form.Label>
-                      <Form.Control as="select">
-                        <option value="2">2</option>
-                      </Form.Control>
+                      <Form.Control type="number" value={2}></Form.Control>
                     </Form.Row>
                   </Form.Group>
                   <Form.Group>
                     <Form.Row>
                       <Form.Label>Local Stream</Form.Label>
-                      <Form.Check type="radio" label="false" />
+                      <Form.Check type="radio" label="false" checked />
                       <Form.Check type="radio" label="true" />
                     </Form.Row>
                   </Form.Group>
@@ -900,22 +907,22 @@ class WorkLoadConfiguration extends Component {
   };
 
   handlePrimaryStreamInputChange = (event, streamName) => {
-    let tempStreamObj = {
-      ...this.props.streamParameters.Camera[streamName],
-      [event.target.name]:
-        event.target.value === "" ? "" : Number(event.target.value),
-    };
+    // let tempStreamObj = {
+    //   ...this.props.streamParameters.Camera[streamName],
+    //   [event.target.name]:
+    //     event.target.value === "" ? "" : Number(event.target.value),
+    // };
   };
 
   handlePrimaryStreamBlur = (e, streamName) => {
-    let tempStreamObj;
-    if (streamName.stream_fps < 5) {
-      // let tempStreamObj = {...streamName, streamName.stream_fps:5};
-      // this.setState({ primaryStreamFPSValue: 5 });
-    } else if (streamName.stream_fps > 60) {
-      tempStreamObj = { ...streamName };
-      this.setState({ primaryStreamFPSValue: 60 });
-    }
+    // let tempStreamObj;
+    // if (streamName.stream_fps < 5) {
+    //   // let tempStreamObj = {...streamName, streamName.stream_fps:5};
+    //   // this.setState({ primaryStreamFPSValue: 5 });
+    // } else if (streamName.stream_fps > 60) {
+    //   tempStreamObj = { ...streamName };
+    //   this.setState({ primaryStreamFPSValue: 60 });
+    // }
   };
 
   handleSecondaryStreamSliderChange = (event, val) => {

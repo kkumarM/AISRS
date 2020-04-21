@@ -14,12 +14,14 @@ import { connect } from "react-redux";
 import * as hardwareActions from "../actions/hardwareActions";
 import * as workloadActions from "../actions/workloadActions";
 import { bindActionCreators } from "redux";
+// import Notifications from "./NotificationsContainer";
 
 class Configuration extends Component {
   constructor(props) {
     super(props);
     this.state = {
       expanded: false,
+
     };
   }
 
@@ -36,18 +38,21 @@ class Configuration extends Component {
       ...this.props.displayWorkloadParameters,
       ...this.props.transcodeParameters,
       ...this.props.forwardingParameters,
-      ...this.props.pipelineParameters,
+      ...this.props.va_workloadParameters,
+      ...this.props.pipelineParameters,      
       ...this.props.featureMatchingParameters,
     };
     this.props.hardwareActions.onSubmitHandler(
       this.hardwareFinalObject,
       this.workloadFinalObject
     );
+    
   };
   render() {
     let {
       screenParameters,
       hardwareParameters,
+      moreDetailsSpecification,
       streamParameters,
       storageParameters,
       forwardingParameters,
@@ -59,7 +64,7 @@ class Configuration extends Component {
     } = this.props;
 
 
-    console.log(this.props, "props 123");
+    // console.log(this.props, "props 123");
     return (
       <>
         <Form id="configurationForm">
@@ -94,6 +99,7 @@ class Configuration extends Component {
                   this.props.hardwareActions.handleScreenChange
                 }
                 fetchProcessorRecord={this.props.hardwareActions.fetchProcessorRecord}
+                moreDetailsSpecification={moreDetailsSpecification}
               />
             </ExpansionPanelDetails>
           </ExpansionPanel>
@@ -136,6 +142,7 @@ class Configuration extends Component {
             </Button>
           </div>
         </Form>
+        {/* <Notifications type="success" msg="hi"/> */}
       </>
     );
   }
@@ -145,6 +152,7 @@ const mapStateToProps = (state) => {
   return {
     screenParameters: state.screenParameters,
     hardwareParameters: state.hardwareParameters,
+    moreDetailsSpecification:state.moreDetailsSpecification,
     streamParameters: state.streamParameters,
     storageParameters: state.storageParameters,
     forwardingParameters: state.forwardingParameters,

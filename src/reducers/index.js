@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { screenParameters, hardwareParameters } from "./hardwareReducer";
+import { screenParameters, hardwareParameters, moreDetailsSpecification } from "./hardwareReducer";
 import {
   streamParameters,
   storageParameters,
@@ -14,6 +14,7 @@ import {
 const rootReducer = combineReducers({
   screenParameters,
   hardwareParameters,
+  moreDetailsSpecification,
   streamParameters,
   storageParameters,
   forwardingParameters,

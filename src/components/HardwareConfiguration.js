@@ -19,16 +19,6 @@ class HardWareConfiguration extends Component {
     };
   }
 
-  // componentDidMount(){
-  //   axios({
-  //     method: 'get',
-  //     url: "http://18.224.173.6:80/processor_list",
-  //   }).then((response)=>{
-  //     console.log(response, "response database")
-  //   }).catch((err)=>{
-  //     console.log(err, "error response");
-  //   })
-  // }
   onScreenChange = (e, screenId) => {
     let temp = {
       ...this.props.screenParameters[screenId],
@@ -55,7 +45,6 @@ class HardWareConfiguration extends Component {
   };
 
   handleProcessorNumber = (e) => {
-    console.log(e, "radio");
     e.persist();
     this.setState({ processor_number: e.target.value });
     setTimeout(() => {
@@ -454,6 +443,8 @@ class HardWareConfiguration extends Component {
 
     let { Storage } = this.props.storageParameters;
 
+    let { showMoreDetailsSpecification } = this.props.moreDetailsSpecification;
+
     return (
       <>
         <Grid container>
@@ -694,21 +685,19 @@ class HardWareConfiguration extends Component {
                   </Form.Row>
                 </Form.Group>
               )}
-              <Form.Group>
-                <Form.Row>
-                  <Form.Label>Product Generation</Form.Label>
-                  <Form.Control
-                    as="select"
-                    name="generation"
-                    value={SoC.CPU.generation}
-                    // onChange={this.handleSeriesChange}
-                  >
-                    <option value={8}>8</option>
-                    <option value={9}>9</option>
-                  </Form.Control>
-                </Form.Row>
-              </Form.Group>
-              {/* <Form.Group>
+              {showMoreDetailsSpecification && (
+                <>
+                  <Form.Group>
+                    <Form.Row>
+                      <Form.Label>Product Generation</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="generation"
+                        value={SoC.CPU.generation}
+                      ></Form.Control>
+                    </Form.Row>
+                  </Form.Group>
+                  {/* <Form.Group>
                 <Form.Row>
                   <Form.Label>Specific Processor</Form.Label>
                   <Form.Check
@@ -800,14 +789,16 @@ class HardWareConfiguration extends Component {
                   </tbody>
                 </table>
               )} */}
-              <div className="btnAdvConfig">
-                <Button
-                  onClick={this.handleHardwareDetailsModalOpen}
-                  color="primary"
-                >
-                  <u>More Details Specification</u>
-                </Button>
-              </div>
+                  <div className="btnAdvConfig">
+                    <Button
+                      onClick={this.handleHardwareDetailsModalOpen}
+                      color="primary"
+                    >
+                      <u>More Details Specification</u>
+                    </Button>
+                  </div>
+                </>
+              )}
             </Grid>
             <Grid item xs={6}>
               <Grid container id="accelerator">
@@ -845,6 +836,7 @@ class HardWareConfiguration extends Component {
                                 <Form.Check
                                   type="checkbox"
                                   label="Select All"
+                                  checked={false}
                                 />
                               </Form.Row>
                             </Form.Group>

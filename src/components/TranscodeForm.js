@@ -3,7 +3,6 @@ import { Grid, Typography } from "@material-ui/core";
 import { Form } from "react-bootstrap";
 
 const TranscodeForm = (props) => {
-  console.log(props.transcode, props.forwarding, "transcode obj");
   const [displayId, setDisplayId] = React.useState();
 
   const handleDisplayId = (e) => {
