@@ -664,7 +664,7 @@ class HardWareConfiguration extends Component {
                       <option value="Xeon-E">Xeon-E</option>
                     )}
                     <option value="i7">i7</option>
-                    <option value="i5">Core i5</option>
+                    <option value="i5">i5</option>
                     <option value="i3">i3</option>
                     {this.state.series === "Core S" && (
                       <option value="Pentium">Pentium</option>
@@ -980,10 +980,13 @@ class HardWareConfiguration extends Component {
                         <Form.Row>
                           <Form.Label>Speed of HDD</Form.Label>
                           <Form.Control
-                            type="text"
+                            as="select"
                             name="disk_speed"
                             value={Storage.disk_speed}
-                          />
+                          >
+                            <option value="5400">5400 rpm</option>
+                            <option value="7200">7200 rpm</option>
+                          </Form.Control>
                         </Form.Row>
                       </Form.Group>
                     </Grid>
