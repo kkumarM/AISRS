@@ -39,9 +39,9 @@ const initialHardwareState = {
       thread_count: 12,
       base_frequency: 3700,
       turbo_frequency: 4700,
-      AVX2: true,
-      AVX_512: false,
-      VNNI: false,
+      AVX2: "TRUE",
+      AVX_512: "FALSE",
+      VNNI: "FALSE",
       TDP: 95,
     },
     Memory: {
@@ -83,9 +83,10 @@ export function screenParameters(state = initialScreenState, action) {
 }
 
 export function hardwareParameters(state = initialHardwareState, action) {
+
   switch (action.type) {
     case actionTypes.PROCESSOR_LIST_RECORD:
-      return { ...state, SoC: action.payload ? action.payload : state };
+      return { ...state, SoC: action.payload};
     default:
       return state;
   }
