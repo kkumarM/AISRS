@@ -28,15 +28,19 @@ export const fetchProcessorRecord = (series, brand, processor_number) => {
         //response dispatch to reducer
 
         if (response.data && response.status === 200) {
-          return function (dispatch) {
-            // dispatch({
-            //   type: actionTypes.SHOW_MORE_DETAILS_SPECIFICATION,
-            //   payload: true,
-            // });
-            dispatch({
-              type: actionTypes.PROCESSOR_LIST_RECORD,
-              payload: response.data,
-            });
+          // return function (dispatch) {
+          //   // dispatch({
+          //   //   type: actionTypes.SHOW_MORE_DETAILS_SPECIFICATION,
+          //   //   payload: true,
+          //   // });
+          //   dispatch({
+          //     type: actionTypes.PROCESSOR_LIST_RECORD,
+          //     payload: response.data,
+          //   });
+          // };
+          return {
+            type: actionTypes.PROCESSOR_LIST_RECORD,
+            payload: response.data,
           };
         }
       })
@@ -54,7 +58,7 @@ export const onSubmitHandler = (hardwareConfigObj, workloadConfigObj) => {
   return (dispatch) => {
     axios({
       method: "POST",
-      url: actionTypes.BASE_URL+"simulation_csv",
+      url: actionTypes.BASE_URL + "simulation_csv",
       data: { finalObj: finalObj },
       // responseType: "blob",
     })
