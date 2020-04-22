@@ -685,7 +685,7 @@ class HardWareConfiguration extends Component {
                   </Form.Row>
                 </Form.Group>
               )}
-              {showMoreDetailsSpecification && (
+              {/* {showMoreDetailsSpecification && ( */}
                 <>
                   <Form.Group>
                     <Form.Row>
@@ -798,7 +798,7 @@ class HardWareConfiguration extends Component {
                     </Button>
                   </div>
                 </>
-              )}
+              {/* )} */}
             </Grid>
             <Grid item xs={6}>
               <Grid container id="accelerator">
