@@ -92,7 +92,7 @@ export default class TranscodeConfigFormModal extends Component {
                 </IconButton>
               </Grid>
               <DialogContent>
-                <Grid item xs={12}>
+                <Grid item xs={6}>
                   <Form.Group>
                     <Form.Row>
                       <Form.Label>Number of Transcodes</Form.Label>
