@@ -56,7 +56,7 @@ body {
 
 #configurationForm {
   margin: 25px;
-  min-height: 400px;
+  min-height: 500px;
 }
 
 .h6Styles {
@@ -233,4 +233,12 @@ td {
 }
 #pipeline select.form-control {
   width: 55%;
+}
+
+td .form-check {
+  padding-right: 30px;
+}
+
+#acceleratorTable tr:nth-child(1) td .form-check{
+  padding: 0;
 }

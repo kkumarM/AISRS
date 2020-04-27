@@ -59,19 +59,19 @@ class WorkLoadConfiguration extends Component {
     if (Object.keys(obj).length === 0) {
       workloadEntries.push(
         <tr>
-          <td colspan={2}>WorkLoad List is Empty</td>
+          <td colSpan={2}>WorkLoad List is Empty</td>
         </tr>
       );
     } else {
       Object.keys(obj).forEach((key, index) => {
         workloadEntries.push(
           <tr key={index}>
-            <td>{obj[key].workload_type}</td>
+            <td>{index+1}.  {obj[key].workload_type}</td>
             <td>
               <div className="workloadEditBtn">
                 <Button
                   color="primary"
-                  onClick={this.handleVAWorkloadModalOpen}
+                  onClick={(ele) => this.handleVAWorkloadModalOpen(obj[key], key)}
                 >
                   <u>{obj[key].workload_name}</u>
                 </Button>
@@ -108,7 +108,7 @@ class WorkLoadConfiguration extends Component {
     Object.keys(VA_workload).forEach((key) => {
       typeOfWorkloadList.push(VA_workload[key].workload_type);
     });
-   
+
     Object.keys(VA_workload).forEach((key) => {
       nameOfWorkloadList.push(VA_workload[key].workload_name);
     });
@@ -554,7 +554,7 @@ class WorkLoadConfiguration extends Component {
               <div className="btnAdvConfig">
                 <Button
                   color="primary"
-                  onClick={this.handleVAWorkloadModalOpen}
+                  onClick={()=>this.handleVAWorkloadModalOpen()}
                 >
                   + Add New VA Workload
                 </Button>
@@ -789,7 +789,10 @@ class WorkLoadConfiguration extends Component {
         <VAWorkloadFormModal
           open={this.state.va_workloadFormModalOpen}
           onClose={this.handleVAWorkloadModalClose}
-          callBack={this.handleWorkloadObj}
+          editWorkloadObjDetails={this.editWorkloadObjectDerails}
+          editWorkload={this.editWorkload}
+          workloadKeyName={this.workloadKeyName}
+          // callBack={this.handleWorkloadObj}
         />
       </>
     );
@@ -888,8 +891,15 @@ class WorkLoadConfiguration extends Component {
     this.setState({ transcodeModalOpen: false });
   };
 
-  handleVAWorkloadModalOpen = () => {
+  handleVAWorkloadModalOpen = (obj, workloadKeyName) => {
     this.setState({ va_workloadFormModalOpen: true });
+    if (obj !== undefined) {
+      this.editWorkloadObjectDerails = obj;
+      this.workloadKeyName = workloadKeyName;
+      this.editWorkload = true;
+    }else{
+      this.editWorkload = false;
+    }
   };
 
   handleVAWorkloadModalClose = () => {

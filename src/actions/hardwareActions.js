@@ -68,28 +68,4 @@ export const onSubmitHandler = (hardwareConfigObj, workloadConfigObj) => {
         console.log(error, "error response");
       });
   };
-
-  // // return (dispatch) => {
-  // //   fetch(actionTypes.BASE_URL + "simulation_csv", {
-  // //     method: "POST",
-  // //     body: { finalObj: finalObj },
-  // //     // responseType: "blob",
-  // //   }).then(
-  // //     (response) => {
-  // //       // response dispatch to reducer
-  // //       console.log(response, "success response");
-  // //       if (response.status === 200) {
-  // //         const url = window.URL.createObjectURL(new Blob([response.data]));
-  // //         const link = document.createElement("a");
-  // //         link.href = url;
-  // //         link.setAttribute("download", "platform_example.csv");
-  // //         document.body.appendChild(link);
-  // //         link.click();
-  // //       }
-  // //     },
-  // //     (error) => {
-  // //       console.log(error, "error response");
-  // //     }
-  // //   );
-  // };
 };

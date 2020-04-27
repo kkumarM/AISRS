@@ -430,6 +430,20 @@ class HardWareConfiguration extends Component {
     return processor_list;
   };
 
+  handleSelectAll = (e) => {
+    let ele = document.getElementById("selectAll");
+    var checkBoxes = document.getElementsByName("vpu");
+    if (ele.checked) {
+      for (let i = 0; i < checkBoxes.length; i++) {
+        checkBoxes[i].checked = true;
+      }
+    } else {
+      for (let i = 0; i < checkBoxes.length; i++) {
+        checkBoxes[i].checked = false;
+      }
+    }
+  };
+
   render() {
     let {
       Screen1,
@@ -673,131 +687,139 @@ class HardWareConfiguration extends Component {
                   </Form.Control>
                 </Form.Row>
               </Form.Group>
-              {this.state.series && this.state.brand && (
+
+              {/* {showMoreDetailsSpecification && ( */}
+              <>
                 <Form.Group>
                   <Form.Row>
-                    <Form.Label className="processor_name">
-                      Processor Number
-                    </Form.Label>
-                    <div className="processor_list">
-                      {this.renderProcessorList()}
-                    </div>
+                    <Form.Label>Product Generation</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="generation"
+                      value={SoC.CPU.generation}
+                    ></Form.Control>
                   </Form.Row>
                 </Form.Group>
-              )}
-              {/* {showMoreDetailsSpecification && ( */}
-                <>
-                  <Form.Group>
-                    <Form.Row>
-                      <Form.Label>Product Generation</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="generation"
-                        value={SoC.CPU.generation}
-                      ></Form.Control>
-                    </Form.Row>
-                  </Form.Group>
-                  {/* <Form.Group>
-                <Form.Row>
-                  <Form.Label>Specific Processor</Form.Label>
-                  <Form.Check
-                    type="radio"
-                    label="Enable"
-                    value="Enable"
-                    checked={this.state.specificProcessor === "Enable"}
-                    onChange={this.handleSpecificProcessor}
-                    name="specific_processor"
-                  />
-                  <Form.Check
-                    type="radio"
-                    label="Disable"
-                    value="Disable"
-                    checked={this.state.specificProcessor === "Disable"}
-                    onChange={this.handleSpecificProcessor}
-                    name="specific_processor"
-                  />
-                </Form.Row>
-              </Form.Group>
-              {this.state.specificProcessor === "Enable" && (
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>
+                {this.state.series && this.state.brand && (
+                  <>
+                    <Form.Group>
+                      <Form.Row>
+                        <Form.Label>Specific Processor</Form.Label>
+                        <Form.Check
+                          type="radio"
+                          label="Enable"
+                          value="Enable"
+                          checked={this.state.specificProcessor === "Enable"}
+                          onChange={this.handleSpecificProcessor}
+                          name="specific_processor"
+                        />
+                        <Form.Check
+                          type="radio"
+                          label="Disable"
+                          value="Disable"
+                          checked={this.state.specificProcessor === "Disable"}
+                          onChange={this.handleSpecificProcessor}
+                          name="specific_processor"
+                        />
+                      </Form.Row>
+                    </Form.Group>
+
+                    {this.state.specificProcessor === "Enable" && (
+                      <>
                         <Form.Group>
                           <Form.Row>
-                            <Form.Check
-                              type="checkbox"
-                              label="Select All"
-                              name="allProcessorChecked"
-                              checked={this.state.allProcessorChecked}
-                              onChange={this.handleAllProcessorCheckbox}
-                            />
+                            <Form.Label className="processor_name">
+                              Processor Number
+                            </Form.Label>
+                            <div className="processor_list">
+                              {this.renderProcessorList()}
+                            </div>
                           </Form.Row>
                         </Form.Group>
-                      </td>
-                      <td>
-                        <label className="processor_number">
-                          Processor Number
-                        </label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>
-                        <Form.Group>
-                          <Form.Row>
-                            <Form.Check
-                              type="checkbox"
-                              label="i7-8700K"
-                              name="processor"
-                              checked={SoC.processor_number === "i7-8700K"}
-                            />
-                          </Form.Row>
-                        </Form.Group>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>
-                        <Form.Group>
-                          <Form.Row>
-                            <Form.Check
-                              type="checkbox"
-                              label="i7-8700T"
-                              checked={SoC.processor_number === "i7-8700T"}
-                              name="processor"
-                            />
-                          </Form.Row>
-                        </Form.Group>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td>
-                        <Form.Group>
-                          <Form.Row>
-                            <Form.Check
-                              type="checkbox"
-                              label="i7-9700TE"
-                              checked={SoC.processor_number === "i7-9700TE"}
-                              name="processor"
-                            />
-                          </Form.Row>
-                        </Form.Group>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              )} */}
-                  <div className="btnAdvConfig">
-                    <Button
-                      onClick={this.handleHardwareDetailsModalOpen}
-                      color="primary"
-                    >
-                      <u>More Details Specification</u>
-                    </Button>
-                  </div>
-                </>
+                      </>
+                    )}
+                  </>
+                )}
+                {/* {this.state.specificProcessor === "Enable" && (
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Form.Group>
+                            <Form.Row>
+                              <Form.Check
+                                type="checkbox"
+                                label="Select All"
+                                name="allProcessorChecked"
+                                checked={this.state.allProcessorChecked}
+                                onChange={this.handleAllProcessorCheckbox}
+                              />
+                            </Form.Row>
+                          </Form.Group>
+                        </td>
+                        <td>
+                          <label className="processor_number">
+                            Processor Number
+                          </label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <Form.Group>
+                            <Form.Row>
+                              <Form.Check
+                                type="checkbox"
+                                label="i7-8700K"
+                                name="processor"
+                                checked={SoC.processor_number === "i7-8700K"}
+                              />
+                            </Form.Row>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <Form.Group>
+                            <Form.Row>
+                              <Form.Check
+                                type="checkbox"
+                                label="i7-8700T"
+                                checked={SoC.processor_number === "i7-8700T"}
+                                name="processor"
+                              />
+                            </Form.Row>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td>
+                          <Form.Group>
+                            <Form.Row>
+                              <Form.Check
+                                type="checkbox"
+                                label="i7-9700TE"
+                                checked={SoC.processor_number === "i7-9700TE"}
+                                name="processor"
+                              />
+                            </Form.Row>
+                          </Form.Group>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                )} */}
+                <div className="btnAdvConfig">
+                  <Button
+                    onClick={this.handleHardwareDetailsModalOpen}
+                    color="primary"
+                  >
+                    <u>More Details Specification</u>
+                  </Button>
+                </div>
+              </>
               {/* )} */}
             </Grid>
             <Grid item xs={6}>
@@ -827,16 +849,17 @@ class HardWareConfiguration extends Component {
                     </Form.Row>
                   </Form.Group>
                   {this.state.accelerator === "Enable" && (
-                    <table>
+                    <table id="acceleratorTable">
                       <tbody>
                         <tr>
-                          <td>
+                          <td align="right">
                             <Form.Group>
                               <Form.Row>
                                 <Form.Check
                                   type="checkbox"
                                   label="Select All"
-                                  checked={false}
+                                  id="selectAll"
+                                  onChange={(e) => this.handleSelectAll(e)}
                                 />
                               </Form.Row>
                             </Form.Group>
@@ -850,7 +873,7 @@ class HardWareConfiguration extends Component {
                         </tr>
                         <tr>
                           <td></td>
-                          <td>
+                          <td colSpan={2}>
                             <Form.Group>
                               <Form.Row>
                                 <Form.Check
@@ -859,14 +882,8 @@ class HardWareConfiguration extends Component {
                                   checked={Accelerator.vpu === "KBM 3400VE"}
                                   name="vpu"
                                 />
-                              </Form.Row>
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <Form.Group>
-                              <Form.Row>
                                 <Form.Control
-                                  type="text"
+                                  type="number"
                                   // name="vpu_count"
                                   // value={Accelerator.vpu_count}
                                 />
@@ -876,7 +893,7 @@ class HardWareConfiguration extends Component {
                         </tr>
                         <tr>
                           <td></td>
-                          <td>
+                          <td colSpan={2}>
                             <Form.Group>
                               <Form.Row>
                                 <Form.Check
@@ -885,20 +902,14 @@ class HardWareConfiguration extends Component {
                                   checked={Accelerator.vpu === "KBM 3500VE"}
                                   name="vpu"
                                 />
-                              </Form.Row>
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <Form.Group>
-                              <Form.Row>
-                                <Form.Control type="text" />
+                                <Form.Control type="number" />
                               </Form.Row>
                             </Form.Group>
                           </td>
                         </tr>
                         <tr>
                           <td></td>
-                          <td>
+                          <td colSpan={2}>
                             <Form.Group>
                               <Form.Row>
                                 <Form.Check
@@ -907,14 +918,8 @@ class HardWareConfiguration extends Component {
                                   checked={Accelerator.vpu === "KBM 3700VE"}
                                   name="vpu"
                                 />
-                              </Form.Row>
-                            </Form.Group>
-                          </td>
-                          <td>
-                            <Form.Group>
-                              <Form.Row>
                                 <Form.Control
-                                  type="text"
+                                  type="number"
                                   name="vpu_count"
                                   value={Accelerator.vpu_count}
                                 />

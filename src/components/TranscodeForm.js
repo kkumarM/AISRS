@@ -144,7 +144,13 @@ const TranscodeForm = (props) => {
               <Form.Row>
                 <Form.Label>Sub Screens</Form.Label>
                 <Form.Control as="select">
-                  <option value="16">16</option>
+                  <option value={1}>1</option>
+                  <option value={4}>4</option>
+                  <option value={8}>8</option>
+                  <option value={9}>9</option>
+                  <option value={16}>16</option>
+                  <option value={32}>32</option>
+                  <option value={64}>64</option>
                 </Form.Control>
               </Form.Row>
             </Form.Group>

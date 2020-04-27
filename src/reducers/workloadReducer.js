@@ -113,14 +113,10 @@ const initialTranscodeState = {
   },
 };
 
-// const VA_workload = {
-//   workload: [],
-// };
-
 const initialVAWorkloadState = {
   VA_workload: {
     Workload1: {
-      workload_type: "Video structuring",
+      workload_type: "Video Structuring",
       workload_name: "Video structuring_1",
       detect_fps: 10,
       detect_NN: "Tiny_Yolo_V2",
@@ -130,7 +126,7 @@ const initialVAWorkloadState = {
       classification_NN2: "InceptionV2",
     },
     Workload2: {
-      workload_type: "Video structuring",
+      workload_type: "Video Structuring",
       workload_name: "Video structuring_2",
       detect_fps: 15,
       detect_NN: "Tiny_Yolo_V2",
@@ -140,7 +136,7 @@ const initialVAWorkloadState = {
       classification_NN2: "InceptionV2",
     },
     Workload3: {
-      workload_type: "VA2",
+      workload_type: "Video Structuring",
       workload_name: "VA2_2",
       detect_fps: 10,
       detect_NN: "D_NN_Name1",
@@ -227,31 +223,39 @@ export function transcodeParameters(state = initialTranscodeState, action) {
   }
 }
 
-// export const addNewWorkload = (state = VA_workload, action) => {
-//   switch (action.type) {
-//     case actionTypes.ADD_NEW_VA_WORLOAD: {
-//       return {
-//         ...state,
-//         workload: state.workload.concat(action.newVAWorkload),
-//       };
-//     }
-//     default:
-//       return state;
-//   }
-// };
-
 export function va_workloadParameters(state = initialVAWorkloadState, action) {
   switch (action.type) {
+    case actionTypes.ADD_NEW_VA_WORLOAD: {
+      return {
+        ...state,
+        VA_workload: Object.assign(state.VA_workload, action.newVAWorkload),
+      };
+    }
+    case actionTypes.EDIT_WORKLOAD_ITEM:
+      console.log(
+        action.payload.workloadObj,
+        action.payload.workloadName,
+        " in rducer"
+      );
+      return {
+        ...state,
+        VA_workload: Object.keys(state.VA_workload).reduce((acc, key) => {
+          if (key === action.payload.workloadName) {
+            return { ...acc, [key]: action.payload.workloadObj };
+          } else {
+            return { ...acc, [key]: state.VA_workload[key] };
+          }
+        }, {}),
+      };
     case actionTypes.DELETE_WORKLOAD_ITEM:
       return {
         ...state,
-         VA_workload: Object.keys(state.VA_workload).reduce((acc, key) => {
-            if (key !== action.workloadName) {
-              return { ...acc, [key]: state.VA_workload[key] };
-            }
-            return acc;
-          }, {}),
-        
+        VA_workload: Object.keys(state.VA_workload).reduce((acc, key) => {
+          if (key !== action.workloadName) {
+            return { ...acc, [key]: state.VA_workload[key] };
+          }
+          return acc;
+        }, {}),
       };
     default:
       return state;

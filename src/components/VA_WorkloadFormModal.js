@@ -6,92 +6,134 @@ import {
   DialogContent,
   Button,
   IconButton,
-  Grid
+  Grid,
 } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import { Form } from "react-bootstrap";
 
-import { connect } from 'react-redux'
-import * as vaWorkloadActions from '../actions/workloadActions';
-
-let count = 1;
+import { connect } from "react-redux";
+import * as vaWorkloadActions from "../actions/workloadActions";
 
 class VA_WorkloadFormModal extends Component {
-  
-    state = {
-      workload_type : 'Video Structuring',
-      workload : {
-        videoStructuring : {
-          workload_type: "Video Structuring",
-          workload_name: "Video Structuring_"+count,
-          detect_fps: 10,
-          detect_NN: "Tiny_Yolo_V2",
-          object_number: 5,
-          classification_number: 2,
-          classification_NN1: "Resnet50",
-          classification_NN2: "InceptionV2"
-          },
-        dieCastingDefect : {
-          workload_type: "",
-          image_alignment : '',
-          feature_extraction : '',
-          find_ROI : '',
-          classifier_number : 1,
-          classifier_algo1 : '',
-          classifier_algo2 : '',
-          classifier_algo3 : '',
-          classifier_algo4 : ''
-         }
-       }
-    }
+  state = {
+    workload_type: "Video Structuring",
+    workload: {
+      videoStructuring: {
+        workload_type: "Video Structuring",
+        workload_name: "Video Structuring",
+        detect_fps: 10,
+        detect_NN: "Tiny_Yolo_V2",
+        object_number: 5,
+        classification_number: 2,
+        classification_NN1: "Resnet50",
+        classification_NN2: "InceptionV2",
+      },
+      dieCastingDefect: {
+        workload_type: "Die-casting Defect Detection",
+        workload_name: "Die-casting Defect Detection",
+        image_alignment: "align2222",
+        feature_extraction: "feature1111",
+        find_ROI: "roixxx",
+        classifier_number: 1,
+        classifier_algo1: "algo1",
+        classifier_algo2: "algo2",
+        classifier_algo3: "algo3",
+        classifier_algo4: "algo4",
+      },
+    },
+  };
 
-
-  workloadTypeHandler = e => {
+  workloadTypeHandler = (e) => {
     this.setState({
-      workload_type : e.target.value
-    })
-  }
+      workload_type: e.target.value,
+    });
+  };
 
   handleChange = (e, identifier) => {
-    
+    e.preventDefault();
     let nameIdentifyer = identifier;
     let workloadType = this.state.workload_type;
-    if(workloadType === 'Video Structuring' ){
-      workloadType = 'videoStructuring';
-    }else if( workloadType === 'Die-casting Defect Detection' ){
-      workloadType = 'dieCastingDefect';
+    if (workloadType === "Video Structuring") {
+      workloadType = "videoStructuring";
+    } else if (workloadType === "Die-casting Defect Detection") {
+      workloadType = "dieCastingDefect";
     }
 
     const updatedWorkload = {
-      ...this.state.workload
+      ...this.state.workload,
     };
 
-    const updatedWorkloadType = {...updatedWorkload[workloadType]};
+    const updatedWorkloadType = { ...updatedWorkload[workloadType] };
     updatedWorkloadType[nameIdentifyer] = e.target.value;
     updatedWorkload[workloadType] = updatedWorkloadType;
     this.setState({
-       workload : updatedWorkload
-     })
-    
-  }
-
-  handleWorkloadSubmit = e => {
-    let workloadType = this.state.workload_type;
-    if(workloadType === 'Video Structuring' ){
-      workloadType = 'videoStructuring';
-    }else if( workloadType === 'Die-casting Defect Detection' ){
-      workloadType = 'dieCastingDefect';
-    }
-    const updatedWorkload = {
-      ...this.state.workload
-    };
-
-    const updatedWorkloadType = {...updatedWorkload[workloadType]};
-
-    this.props.submitHandler(updatedWorkloadType);
-    this.props.onClose();
-    console.log(this.props.addedWorkload);
+      workload: updatedWorkload,
+    });
   };
+
+  handleWorkloadSubmit = (e) => {
+    e.preventDefault();
+    let workloadType = this.state.workload_type;
+    if (workloadType === "Video Structuring") {
+      workloadType = "videoStructuring";
+    } else if (workloadType === "Die-casting Defect Detection") {
+      workloadType = "dieCastingDefect";
+    }
+    if (this.props.editWorkload) {
+      
+      this.props.onWorkloadEdit(
+        this.state.workload[workloadType],
+        this.props.workloadKeyName
+      );
+    } else {
+      let length = Object.keys(
+        this.props.addedWorkload.va_workloadParameters.VA_workload
+      ).length;
+      let count = (length = undefined ? 1 : (length = length + 1));
+
+      const updatedWorkload = {
+        ...this.state.workload,
+      };
+
+      const updatedWorkloadType = { ...updatedWorkload[workloadType] };
+      this.props.submitHandler(updatedWorkloadType, count);
+    }
+
+    this.props.onClose();
+  };
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.editWorkloadObjDetails);
+    if (
+      nextProps.editWorkload &&
+      nextProps.editWorkloadObjDetails !== undefined
+    ) {
+      let editworkloadType = nextProps.editWorkloadObjDetails.workload_type;
+      
+      console.log(editworkloadType, "die casting");
+      Object.keys(this.state.workload).forEach((key, index) => {
+        console.log(key, "key");
+        if (
+          key === "videoStructuring" &&
+          editworkloadType === "Video Structuring"
+        ) {
+          this.setState({
+            workload_type: editworkloadType,
+            workload: { [key]: nextProps.editWorkloadObjDetails },
+          });
+        } else if (
+          key === "dieCastingDefect" &&
+          editworkloadType === "Die-casting Defect Detection"
+        ) {
+          console.log("in die");
+          this.setState({
+            workload_type: editworkloadType,
+            workload: { [key]: nextProps.editWorkloadObjDetails },
+          });
+        }
+      });
+    }
+  }
 
   render() {
     return (
@@ -106,7 +148,9 @@ class VA_WorkloadFormModal extends Component {
           <Grid container>
             <Grid item xs={10}>
               <DialogTitle id="form-dialog-title" className="h6Styles">
-                Define New Video Analysis Workload
+                {this.props.editWorkloadObjDetails
+                  ? "Video Analysis Workload Definition"
+                  : "Define New Video Analysis Workload"}
               </DialogTitle>
             </Grid>
             <Grid item xs={2}>
@@ -122,7 +166,7 @@ class VA_WorkloadFormModal extends Component {
                     <Form.Control
                       as="select"
                       name="workload_type"
-                      onChange={e => this.workloadTypeHandler(e)}
+                      onChange={(e) => this.workloadTypeHandler(e)}
                       value={this.state.workload_type}
                     >
                       <option value="Video Structuring">
@@ -134,31 +178,34 @@ class VA_WorkloadFormModal extends Component {
                     </Form.Control>
                   </Form.Row>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Row>
-                    <Form.Label>Name of VA Workload</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="workload_name"
-                      value={
-                        this.state.workload.videoStructuring.workload_type
-                          // ? this.state.workload.videoStructuring.workload_type + "_" + count
-                          // : ""
-                      }
-                      onChange={e => this.handleChange(e, 'workload_name')}
-                    />
-                  </Form.Row>
-                </Form.Group>
+
                 {this.state.workload_type === "Video Structuring" && (
                   <>
+                    <Form.Group>
+                      <Form.Row>
+                        <Form.Label>Name of VA Workload</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="workload_name"
+                          value={
+                            this.state.workload.videoStructuring.workload_name
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "workload_name")
+                          }
+                        />
+                      </Form.Row>
+                    </Form.Group>
                     <Form.Group>
                       <Form.Row>
                         <Form.Label>Detection FPS</Form.Label>
                         <Form.Control
                           type="text"
                           name="detect_fps"
-                          value ={this.state.workload.videoStructuring.detect_fps}
-                          onChange={e => this.handleChange(e, 'detect_fps')}
+                          value={
+                            this.state.workload.videoStructuring.detect_fps
+                          }
+                          onChange={(e) => this.handleChange(e, "detect_fps")}
                         />
                       </Form.Row>
                     </Form.Group>
@@ -169,7 +216,7 @@ class VA_WorkloadFormModal extends Component {
                           as="select"
                           name="detect_NN"
                           value={this.state.workload.videoStructuring.detect_NN}
-                          onChange={e => this.handleChange(e, 'detect_NN')}
+                          onChange={(e) => this.handleChange(e, "detect_NN")}
                         >
                           <option value="Tiny_Yolo_V2">Tiny_Yolo_V2</option>
                         </Form.Control>
@@ -183,8 +230,12 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           type="text"
                           name="object_number"
-                          value={this.state.workload.videoStructuring.object_number}
-                          onChange={e => this.handleChange(e, 'object_number')}
+                          value={
+                            this.state.workload.videoStructuring.object_number
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "object_number")
+                          }
                         />
                       </Form.Row>
                     </Form.Group>
@@ -194,8 +245,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           as="select"
                           name="classification_number"
-                          value={this.state.workload.videoStructuring.classification_number}
-                          onChange={e => this.handleChange(e, 'classification_number')}
+                          value={
+                            this.state.workload.videoStructuring
+                              .classification_number
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "classification_number")
+                          }
                         >
                           <option value="0">0</option>
                           <option value="1">1</option>
@@ -217,8 +273,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           as="select"
                           name="classification_NN1"
-                          value={this.state.workload.videoStructuring.classification_NN1}
-                          onChange={e => this.handleChange(e, 'classification_NN1')}
+                          value={
+                            this.state.workload.videoStructuring
+                              .classification_NN1
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "classification_NN1")
+                          }
                         >
                           <option value="Resnet 50">Resnet 50</option>
                         </Form.Control>
@@ -230,8 +291,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           as="select"
                           name="classification_NN2"
-                          value={this.state.workload.videoStructuring.classification_NN2}
-                          onChange={e => this.handleChange(e, 'classification_NN2')}
+                          value={
+                            this.state.workload.videoStructuring
+                              .classification_NN2
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "classification_NN2")
+                          }
                         >
                           <option value="Inception V2">Inception V2</option>
                         </Form.Control>
@@ -252,13 +318,31 @@ class VA_WorkloadFormModal extends Component {
                   <>
                     <Form.Group>
                       <Form.Row>
+                        <Form.Label>Name of VA Workload</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="workload_name"
+                          value={
+                            this.state.workload.dieCastingDefect.workload_name
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "workload_name")
+                          }
+                        />
+                      </Form.Row>
+                    </Form.Group>
+                    <Form.Group>
+                      <Form.Row>
                         <Form.Label>Image Alignment</Form.Label>
                         <Form.Control
                           type="text"
                           name="image_alignment"
-                          value = {this.state.workload.dieCastingDefect.image_alignment}
-                          onChange={e => this.handleChange(e, 'image_alignment')}
-                          // value="align2222"
+                          value={
+                            this.state.workload.dieCastingDefect.image_alignment
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "image_alignment")
+                          }
                         />
                       </Form.Row>
                     </Form.Group>
@@ -268,9 +352,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           type="text"
                           name="feature_extraction"
-                          value = {this.state.workload.dieCastingDefect.feature_extraction}
-                          onChange={e => this.handleChange(e ,'feature_extraction')}
-                          // value="feature1111"
+                          value={
+                            this.state.workload.dieCastingDefect
+                              .feature_extraction
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "feature_extraction")
+                          }
                         />
                       </Form.Row>
                     </Form.Group>
@@ -280,19 +368,25 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           type="text"
                           name="find_ROI"
-                          value = {this.state.workload.dieCastingDefect.find_ROI}
-                          onChange={e => this.handleChange(e, 'find_ROI')}
-                          // value="roixxx"
+                          value={this.state.workload.dieCastingDefect.find_ROI}
+                          onChange={(e) => this.handleChange(e, "find_ROI")}
                         />
                       </Form.Row>
                     </Form.Group>
                     <Form.Group>
                       <Form.Row>
                         <Form.Label>Number of Classifier</Form.Label>
-                        <Form.Control as="select" 
+                        <Form.Control
+                          as="select"
                           name="classifier_number"
-                          value = {this.state.workload.dieCastingDefect.classifier_number}
-                          onChange={e => this.handleChange(e, 'classifier_number')}>
+                          value={
+                            this.state.workload.dieCastingDefect
+                              .classifier_number
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "classifier_number")
+                          }
+                        >
                           <option value="0">0</option>
                           <option value="1">1</option>
                           <option value="2">2</option>
@@ -307,9 +401,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           type="text"
                           name="classifier_algo1"
-                          value = {this.state.workload.dieCastingDefect.classifier_algo1}
-                          onChange={e => this.handleChange(e, 'classifier_algo1')}
-                          // value="algo1"
+                          value={
+                            this.state.workload.dieCastingDefect
+                              .classifier_algo1
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "classifier_algo1")
+                          }
                         />
                       </Form.Row>
                     </Form.Group>
@@ -319,9 +417,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           type="text"
                           name="classifier_algo2"
-                          value = {this.state.workload.dieCastingDefect.classifier_algo2}
-                          onChange={e => this.handleChange(e, 'classifier_algo2')}
-                          // value="algo2"
+                          value={
+                            this.state.workload.dieCastingDefect
+                              .classifier_algo2
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "classifier_algo2")
+                          }
                         />
                       </Form.Row>
                     </Form.Group>
@@ -331,9 +433,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           type="text"
                           name="classifier_algo3"
-                          onChange={e => this.handleChange(e, 'classifier_algo3')}
-                          value = {this.state.workload.dieCastingDefect.classifier_algo3}
-                          // value="algo3"
+                          onChange={(e) =>
+                            this.handleChange(e, "classifier_algo3")
+                          }
+                          value={
+                            this.state.workload.dieCastingDefect
+                              .classifier_algo3
+                          }
                         />
                       </Form.Row>
                     </Form.Group>
@@ -343,9 +449,13 @@ class VA_WorkloadFormModal extends Component {
                         <Form.Control
                           type="text"
                           name="classifier_algo4"
-                          value = {this.state.workload.dieCastingDefect.classifier_algo4}
-                          onChange={e => this.handleChange(e, 'classifier_algo4')}
-                          // value="algo4"
+                          value={
+                            this.state.workload.dieCastingDefect
+                              .classifier_algo4
+                          }
+                          onChange={(e) =>
+                            this.handleChange(e, "classifier_algo4")
+                          }
                         />
                       </Form.Row>
                     </Form.Group>
@@ -358,7 +468,10 @@ class VA_WorkloadFormModal extends Component {
                 <Button onClick={this.props.onClose} color="primary">
                   Cancel
                 </Button>
-                <Button onClick={(e)=> this.handleWorkloadSubmit()} color="primary">
+                <Button
+                  onClick={(e) => this.handleWorkloadSubmit(e)}
+                  color="primary"
+                >
                   Submit
                 </Button>
               </DialogActions>
@@ -370,11 +483,19 @@ class VA_WorkloadFormModal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-      addedWorkload : state
-  })
-const mapDispatchToProps = dispatch => ({ 
-  submitHandler : (newVAWorkload) => {dispatch(vaWorkloadActions.addNewWorkload(newVAWorkload))}
- })
+const mapStateToProps = (state) => ({
+  addedWorkload: state,
+});
+const mapDispatchToProps = (dispatch) => ({
+  submitHandler: (newVAWorkload, count) => {
+    dispatch(vaWorkloadActions.addNewWorkload(newVAWorkload, count));
+  },
+  onWorkloadEdit: (updatedWorkload, key) => {
+    dispatch(vaWorkloadActions.editWorkload(updatedWorkload, key));
+  },
+});
 
-export default connect(mapStateToProps,mapDispatchToProps)(VA_WorkloadFormModal);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(VA_WorkloadFormModal);
