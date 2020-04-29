@@ -55,9 +55,10 @@ class VA_WorkloadFormModal extends Component {
     let workloadType = this.state.workload_type;
     if (workloadType === "Video Structuring") {
       workloadType = "videoStructuring";
-    } else if (workloadType === "Die-casting Defect Detection") {
-      workloadType = "dieCastingDefect";
     }
+    //  else if (workloadType === "Die-casting Defect Detection") {
+    //   workloadType = "dieCastingDefect";
+    // }
 
     const updatedWorkload = {
       ...this.state.workload,
@@ -76,9 +77,10 @@ class VA_WorkloadFormModal extends Component {
     let workloadType = this.state.workload_type;
     if (workloadType === "Video Structuring") {
       workloadType = "videoStructuring";
-    } else if (workloadType === "Die-casting Defect Detection") {
-      workloadType = "dieCastingDefect";
     }
+    //  else if (workloadType === "Die-casting Defect Detection") {
+    //   workloadType = "dieCastingDefect";
+    // }
     if (this.props.editWorkload) {
       
       this.props.onWorkloadEdit(
@@ -121,16 +123,17 @@ class VA_WorkloadFormModal extends Component {
             workload_type: editworkloadType,
             workload: { [key]: nextProps.editWorkloadObjDetails },
           });
-        } else if (
-          key === "dieCastingDefect" &&
-          editworkloadType === "Die-casting Defect Detection"
-        ) {
-          console.log("in die");
-          this.setState({
-            workload_type: editworkloadType,
-            workload: { [key]: nextProps.editWorkloadObjDetails },
-          });
-        }
+        } 
+        // else if (
+        //   key === "dieCastingDefect" &&
+        //   editworkloadType === "Die-casting Defect Detection"
+        // ) {
+        //   console.log("in die");
+        //   this.setState({
+        //     workload_type: editworkloadType,
+        //     workload: { [key]: nextProps.editWorkloadObjDetails },
+        //   });
+        // }
       });
     }
   }
@@ -172,9 +175,9 @@ class VA_WorkloadFormModal extends Component {
                       <option value="Video Structuring">
                         Video Structuring
                       </option>
-                      <option value="Die-casting Defect Detection">
+                      {/* <option value="Die-casting Defect Detection">
                         Die-casting Defect Detection
-                      </option>
+                      </option> */}
                     </Form.Control>
                   </Form.Row>
                 </Form.Group>

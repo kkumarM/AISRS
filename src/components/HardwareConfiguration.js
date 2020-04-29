@@ -457,7 +457,7 @@ class HardWareConfiguration extends Component {
 
     let { Storage } = this.props.storageParameters;
 
-    let { showMoreDetailsSpecification } = this.props.moreDetailsSpecification;
+    // let { showMoreDetailsSpecification } = this.props.moreDetailsSpecification;s
 
     return (
       <>
@@ -678,7 +678,7 @@ class HardWareConfiguration extends Component {
                       <option value="Xeon-E">Xeon-E</option>
                     )}
                     <option value="i7">i7</option>
-                    <option value="i5">Core i5</option>
+                    <option value="i5">i5</option>
                     <option value="i3">i3</option>
                     {this.state.series === "Core S" && (
                       <option value="Pentium">Pentium</option>
