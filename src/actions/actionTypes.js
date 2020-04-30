@@ -1,4 +1,4 @@
-export const BASE_URL = "https://18.217.64.145:443/";
+export const BASE_URL = "https://10.67.103.91:80/";
 
 export const ADD_NEW_VA_WORLOAD = "ADD_NEW_VA_WORLOAD";
 
